@@ -6,6 +6,7 @@ import {deleteFile, downloadFile, getFileInfo, getFileLink, getFiles, uploadFile
 
 import FileList from "../../containers/FileList";
 import {getToken} from "../../storage/token";
+import {logoutUser} from "../../api/user";
 
 const Files = () => {
     const params = useParams();
@@ -51,6 +52,11 @@ const Files = () => {
         await fetchFiles();
     };
 
+    const handleLogout = async () => {
+        await logoutUser();
+        navigate('/');
+    }
+
     return (
         <FileList
             isModifiable={!params.linkId}
@@ -61,6 +67,7 @@ const Files = () => {
             onFileUpload={handleFileUpload}
             onFileDelete={handleDelete}
             onFileLinkGenerate={handleGenerateLink}
+            onLogout={handleLogout}
         />
     );
 };

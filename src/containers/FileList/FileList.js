@@ -21,6 +21,7 @@ const FileList = ({
     onFileDownload,
     onFileDelete,
     onFileLinkGenerate,
+    onLogout
 }) => {
     const renderContent = () => {
         if (files.length > 0) return (
@@ -61,6 +62,7 @@ const FileList = ({
                     {renderContent()}
                 </div>
             </div>
+            <div className={css.logout} onClick={onLogout}>log out</div>
         </CenterContent>
     );
 };

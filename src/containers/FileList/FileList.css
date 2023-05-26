@@ -79,3 +79,11 @@
     height: 26px;
     color: white;
 }
+
+.logout {
+    cursor: pointer;
+    font-size: 8px;
+    position: absolute;
+    bottom: 0;
+    opacity: 0.3;
+}
