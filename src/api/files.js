@@ -1,17 +1,12 @@
 import api from './index';
 
 // Function to upload a file
-export async function uploadFile(file, authorization) {
+export async function uploadFile(file) {
     try {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await api.post('/files', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: authorization
-            }
-        });
+        const response = await api.post('/files', formData);
 
         return response.data;
     } catch (error) {
