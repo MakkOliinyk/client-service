@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginForm from './pages/LoginForm/LoginForm';
-import FileList from './pages/FileList/FileList';
-import SingleFile from './pages/File';
+import LoginForm from './pages/LoginForm';
+import FileList from './pages/Files';
 
 import './App.css';
 import './index.css';
@@ -14,7 +13,7 @@ const App = () => {
         <Routes>
             <Route path="/" element={<LoginForm />} />
             <Route path="/files" element={<FileList />} />
-            <Route path="/files/:fileId" element={<SingleFile />} />
+            <Route path="/files/:linkId" element={<FileList />} />
         </Routes>
       </Router>
   );

@@ -7,7 +7,8 @@
 }
 
 .fileListContainer {
-    background-color: #9384ba;
+    background-color: #a395c7;
+    /*background-color: #9384ba;*/
     /*background-color: #917fc1;*/
     /*background-color: #a67fc1;*/
     width: 100%;
@@ -17,7 +18,7 @@
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .header {
