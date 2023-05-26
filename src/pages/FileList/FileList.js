@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Icon from '@mdi/react';
+import { mdiLink, mdiDelete } from '@mdi/js';
 
 import './FileList.css';
 import {getFiles} from "../../api/files";
@@ -51,8 +53,8 @@ const FileList = () => {
                         {files.map((file) => (
                             <li key={file.id}>
                                 {file.name}
-                                <button onClick={() => handleDelete(file.id)}>Delete</button>
-                                <button onClick={() => handleGenerateLink(file.id)}>Generate Link</button>
+                                <div onClick={() => handleGenerateLink(file.id)}><Icon path={mdiLink} /></div>
+                                <div onClick={() => handleDelete(file.id)}><Icon path={mdiDelete} /></div>
                             </li>
                         ))}
                     </ul>
