@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import {deleteFile, downloadFile, getFileInfo, getFileLink, getFiles, uploadFile} from "../../api/files";
 
 import FileList from "../../containers/FileList";
+import {getToken} from "../../storage/token";
 
 const Files = () => {
     const params = useParams();
+    const navigate = useNavigate();
+
     const [files, setFiles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [processingFiles, setProcessingFiles] = useState([]);
@@ -19,6 +23,7 @@ const Files = () => {
     };
 
     useEffect(() => {
+        if (!params.linkId && !getToken()) navigate('/');
         fetchFiles(params.linkId);
     }, []);
 
@@ -34,7 +39,6 @@ const Files = () => {
     };
 
     const handleGenerateLink = async (fileId) => {
-        console.log(params);
         setProcessingFiles([...processingFiles, fileId]);
         const link = await getFileLink(fileId);
         navigator.clipboard.writeText(window.location.href + '/' + link);
