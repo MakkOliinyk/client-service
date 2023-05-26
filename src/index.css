@@ -115,11 +115,9 @@ body {
   --grayLighter: #e0e0e0;
   --grayLightest: #eeeeee;
 
-  --primaryDark: #1976d2;
-  --primary: #2196f3;
-  --primaryLight: #42a5f4;
-  --primaryLighter: #d2eafc;
-  --primaryLightest: #e8f4fd;
+  --primaryDarker: #33347d;
+  --primaryDark: #4f508f;
+  --primary: #6667ab;
 
   --textColor: rgba(0, 0, 0, 0.87);
   --additionalTextColor: rgba(0, 0, 0, 0.67);
