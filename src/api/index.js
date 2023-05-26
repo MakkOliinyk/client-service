@@ -6,7 +6,13 @@ const api = axios.create({
     timeout: 60000, // Adjust the timeout value as needed
 });
 
-api.defaults.headers.common = {'Authorization': `Bearer ${getToken()}`}
+export const addTokenToHeaders = (token) => {
+    if (!token || token === 'undefined') return console.error('Token is not defined');
+
+    api.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+}
+
+addTokenToHeaders(getToken());
 
 // Add a response interceptor to handle CORS and other common issues
 api.interceptors.response.use(

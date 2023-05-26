@@ -1,17 +1,16 @@
 import api from './index';
-import {setToken} from "../storage/token";
+import {removeToken, setToken} from "../storage/token";
 
 export async function registerUser(email, password) {
     try {
         const response = await api.post('/user/register', { email, password });
 
-        const { tokens } = response.data;
-        const token = tokens[tokens.length - 1];
+        const { token } = response.data;
         setToken(token);
 
         const user = response.data;
 
-        return { token, user };
+        return { user };
     } catch (error) {
         throw new Error(error);
     }
@@ -42,11 +41,11 @@ export async function getLoggedInUser() {
     }
 }
 
-export async function logoutUser(authorization) {
+export async function logoutUser() {
     try {
-        const response = await api.post('/user/logout', {}, {
-            headers: { Authorization: authorization }
-        });
+        const response = await api.post('/user/logout', {});
+        removeToken();
+
         return response.data;
     } catch (error) {
         throw new Error(error);
