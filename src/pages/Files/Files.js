@@ -58,9 +58,9 @@ const Files = () => {
             files={files || []}
             processingFiles={processingFiles}
             onFileDownload={handleDownloadFile}
-            onFileUpload={params.linkId ? null : handleFileUpload}
-            onFileDelete={params.linkId ? null : handleDelete}
-            onFileLinkGenerate={params.linkId ? null : handleGenerateLink}
+            onFileUpload={handleFileUpload}
+            onFileDelete={handleDelete}
+            onFileLinkGenerate={handleGenerateLink}
         />
     );
 };
