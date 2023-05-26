@@ -49,6 +49,7 @@ const Files = () => {
 
     return (
         <FileList
+            isModifiable={!params.linkId}
             isLoading={isLoading}
             files={files || []}
             processingFiles={processingFiles}

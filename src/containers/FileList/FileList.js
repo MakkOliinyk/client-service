@@ -13,6 +13,7 @@ import css from './FileList.css';
 import Title from "../../components/Title";
 
 const FileList = ({
+    isModifiable,
     isLoading,
     files,
     processingFiles,
@@ -31,8 +32,8 @@ const FileList = ({
                             {processingFiles?.includes(file.id) ? <Spinner small /> : (
                                 <>
                                     <IconButton iconPath={mdiDownload} onClick={() => onFileDownload(file.id)} />
-                                    <IconButton iconPath={mdiLink} onClick={() => onFileLinkGenerate(file.id)} />
-                                    <IconButton iconPath={mdiDelete} onClick={() => onFileDelete(file.id)} />
+                                    {isModifiable ? <IconButton iconPath={mdiLink} onClick={() => onFileLinkGenerate(file.id)} /> : null}
+                                    {isModifiable ? <IconButton iconPath={mdiDelete} onClick={() => onFileDelete(file.id)} /> : null}
                                 </>
                             )}
                         </div>
@@ -55,7 +56,7 @@ const FileList = ({
                 <div className={css.fileListContainer}>
                     <div className={css.header}>
                         <Title className={css.title} text="Мої файли" />
-                        <FileUpload onChange={onFileUpload} />
+                        {isModifiable ? <FileUpload onChange={onFileUpload} /> : null}
                     </div>
                     {renderContent()}
                 </div>
