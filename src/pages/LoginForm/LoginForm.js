@@ -1,9 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import './LoginForm.css';
 import {loginUser, registerUser} from "../../api/user";
 import {getToken} from "../../storage/token";
+
+import Title from '../../components/Title';
+import Button from '../../components/Button';
+import CenterContent from '../../components/CenterContent';
+
+import css from './LoginForm.css';
 
 const LoginForm = ({ handleLogin }) => {
     const [email, setEmail] = useState('');
@@ -25,33 +30,33 @@ const LoginForm = ({ handleLogin }) => {
     };
 
     return (
-        <div className="centerContent">
-            <div className="loginFormContainer">
-                <h2 className="loginTitle">{isRegistration ? 'Registration' : 'Login'}</h2>
-                <div className="loginForm">
-                    <div className="inputsContainer">
+        <CenterContent fullScreen>
+            <div className={css.loginFormContainer}>
+                <Title className={css.title} text={isRegistration ? 'Registration' : 'Login'} />
+                <div className={css.loginForm}>
+                    <div className={css.inputsContainer}>
                         <input
-                            className="input"
+                            className={css.input}
                             type="email"
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <input
-                            className="input"
+                            className={css.input}
                             type="password"
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button className="button" onClick={handleSubmit}>Submit</button>
+                    <Button label={isRegistration ? 'Register' : 'Login'} onClick={handleSubmit} />
                 </div>
-                <div className="regisrationLink" onClick={() => setIsRegistration(!isRegistration)}>
+                <div className={css.regisrationLink} onClick={() => setIsRegistration(!isRegistration)}>
                     {isRegistration ? 'I already have an account' : 'Don\'t have an account?'}
                 </div>
             </div>
-        </div>
+        </CenterContent>
     );
 };
 
