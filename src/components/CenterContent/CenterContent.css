@@ -1,0 +1,11 @@
+.base {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.fullScreen {
+    width: 100vw;
+    height: 100vh;
+}
