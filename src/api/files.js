@@ -69,7 +69,7 @@ export async function getFileInfo(linkId) {
     try {
         const response = await api.get(`/links/${linkId}`);
 
-        return [response.data];
+        return [{ id: response.data.fileId, fileName: response.data.fileName }];
     } catch (error) {
         throw new Error(error);
     }
