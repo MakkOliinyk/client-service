@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import Icon from '@mdi/react';
+
 import { mdiLink, mdiDelete } from '@mdi/js';
 
-import './FileList.css';
-import {getFiles} from "../../api/files";
+import emptyStateImage from '../../assets/NoDocuments.svg';
+
+import {getFiles, uploadFile} from "../../api/files";
+
+import Spinner from "../../components/Spinner";
+import FileUpload from "../../components/FileUpload";
+import CenterContent from '../../components/CenterContent';
+import { IconButton } from "../../components/Button";
+
+import css from './FileList.css';
+import Title from "../../components/Title";
 
 const FileList = () => {
     const [files, setFiles] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const fetchFiles = async () => {
+        setIsLoading(true);
+        const files = await getFiles();
+        setFiles(files || []);
+        setIsLoading(false);
+    };
 
     useEffect(() => {
-        const fetchFiles = async () => {
-            const files = await getFiles();
-            setFiles(files || []);
-        };
-
         fetchFiles();
     }, []);
 
@@ -29,38 +41,52 @@ const FileList = () => {
         // Get the link in response and handle it accordingly (e.g., display it to the user)
     };
 
-    const handleFileUpload = (e) => {
-        e.preventDefault();
-
-        console.log(e);
-        // Get the uploaded file
-        // Call the server endpoint to add the file
-        // Pass the token and the file in the request
-        // Update the files state with the newly added file
+    const handleFileUpload = async (file) => {
+        setIsLoading(true);
+        await uploadFile(file);
+        await fetchFiles();
     };
 
-    console.log(files);
+    const renderContent = () => {
+        if (files.length > 0) return (
+            <ul className={css.list}>
+                {files.map((file) => (
+                    <li key={file.id} className={css.file}>
+                        <div>{file.fileName}</div>
+                        <div className={css.fileActions}>
+                            <IconButton iconPath={mdiLink} onClick={() => handleGenerateLink(file.id)} />
+                            <IconButton iconPath={mdiDelete} onClick={() => handleDelete(file.id)} />
+                        </div>
+                    </li>))}
+            </ul>
+        );
+
+        return (
+            <CenterContent className={css.noFIles}>
+                {isLoading
+                    ? <Spinner />
+                    : (
+                        <>
+                            <img src={emptyStateImage} alt="No files" />
+                            You haven't uploaded any files yet
+                        </>
+                    )}
+            </CenterContent>
+        );
+    }
 
     return (
-        <div className="centerContent">
-            <div className="pageContainer">
-                <div className="fileListContainer">
-                    <div className="header">
-                        <h2 className="title">My files</h2>
-                        <button type="submit" className="button">Upload</button>
+        <CenterContent fullScreen>
+            <div className={css.pageContainer}>
+                <div className={css.fileListContainer}>
+                    <div className={css.header}>
+                        <Title className={css.title} text="My files" />
+                        <FileUpload onChange={handleFileUpload} />
                     </div>
-                    <ul className="list">
-                        {files.map((file) => (
-                            <li key={file.id}>
-                                {file.name}
-                                <div onClick={() => handleGenerateLink(file.id)}><Icon path={mdiLink} /></div>
-                                <div onClick={() => handleDelete(file.id)}><Icon path={mdiDelete} /></div>
-                            </li>
-                        ))}
-                    </ul>
+                    {renderContent()}
                 </div>
             </div>
-        </div>
+        </CenterContent>
     );
 };
 
