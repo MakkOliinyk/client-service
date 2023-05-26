@@ -14,7 +14,7 @@ const LoginForm = ({ handleLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isRegistration, setIsRegistration] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(getToken() !== 'undefined');
+    const [isLoggedIn, setIsLoggedIn] = useState(getToken() && getToken() !== 'undefined');
     const navigate = useNavigate();
 
     useEffect(() => {
