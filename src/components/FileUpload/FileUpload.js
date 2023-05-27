@@ -1,6 +1,11 @@
 import React, { useRef } from 'react';
 
+import { mdiUpload } from '@mdi/js';
+import Icon from '@mdi/react';
+
 import Button from "../Button";
+
+import css from './FileUpload.css';
 
 const FileUpload = ({ onChange }) => {
     const fileInputRef = useRef(null);
@@ -22,7 +27,11 @@ const FileUpload = ({ onChange }) => {
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
             />
-            <Button label="Upload" onClick={handleClick} />
+            <Button
+                className={css.button}
+                label={<><Icon size="16px" path={mdiUpload} /><span>Завантажити файл</span></>}
+                onClick={handleClick}
+            />
         </div>
     );
 };
