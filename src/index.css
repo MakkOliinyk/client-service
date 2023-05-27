@@ -16,6 +16,7 @@ body {
   --boxShadowBase: 0 1px 2px rgba(0,0,0,0.07),
   0 2px 4px rgba(0,0,0,0.05),
   0 4px 8px rgba(0,0,0,0.03);
+  --boxShadowEnhanced: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   --boxShadowForWhiteBackground: 0 2px 2px 0 rgba(0,0,0,.16), 0 0 2px 0 rgba(0,0,0,.08);
 }
 
@@ -115,9 +116,10 @@ body {
   --grayLighter: #e0e0e0;
   --grayLightest: #eeeeee;
 
-  --primaryDarker: #33347d;
-  --primaryDark: #4f508f;
-  --primary: #6667ab;
+  --primaryDarker: #5a308e;
+  --primaryDark: #7344af;
+  --primary: #9d62e5;
+  --primaryLight: #a56dea;
 
   --textColor: rgba(0, 0, 0, 0.87);
   --additionalTextColor: rgba(0, 0, 0, 0.67);
