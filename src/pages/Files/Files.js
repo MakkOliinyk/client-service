@@ -57,9 +57,14 @@ const Files = () => {
         navigate('/');
     }
 
+    const handleGoHome = () => {
+        navigate('/files');
+        fetchFiles();
+    }
+
     return (
         <FileList
-            isModifiable={!params.linkId}
+            viewOnly={params.linkId}
             isLoading={isLoading}
             files={files || []}
             processingFiles={processingFiles}
@@ -67,6 +72,7 @@ const Files = () => {
             onFileUpload={handleFileUpload}
             onFileDelete={handleDelete}
             onFileLinkGenerate={handleGenerateLink}
+            onGoHome={handleGoHome}
             onLogout={handleLogout}
         />
     );

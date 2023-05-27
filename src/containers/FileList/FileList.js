@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { mdiDownload, mdiLink, mdiDelete } from '@mdi/js';
+import { mdiArrowLeftBoldCircleOutline, mdiDownload, mdiLink, mdiDelete, mdiLogoutVariant } from '@mdi/js';
+import Icon from '@mdi/react';
 
 import emptyStateImage from '../../assets/NoDocuments.svg';
 
@@ -13,7 +14,7 @@ import css from './FileList.css';
 import Title from "../../components/Title";
 
 const FileList = ({
-    isModifiable,
+    viewOnly,
     isLoading,
     files,
     processingFiles,
@@ -21,10 +22,28 @@ const FileList = ({
     onFileDownload,
     onFileDelete,
     onFileLinkGenerate,
+    onGoHome,
     onLogout
 }) => {
+    const renderHeader = () => {
+        if (viewOnly) {
+            return (
+                <div className={`${css.header} ${css.viewOnly}`}>
+                    <IconButton iconPath={mdiArrowLeftBoldCircleOutline} onClick={onGoHome} />
+                    <Title className={css.title} text="Поширені файли" />
+                </div>
+            );
+        }
+
+        return (
+            <div className={css.header}>
+                <Title className={css.title} text="Мої файли" />
+                <FileUpload onChange={onFileUpload} />
+            </div>
+        );
+    };
     const renderContent = () => {
-        if (files.length > 0) return (
+        if (files.length > 0 && !isLoading) return (
             <ul className={css.list}>
                 {files.map((file) => (
                     <div key={file.id} className={css.file}>
@@ -33,8 +52,8 @@ const FileList = ({
                             {processingFiles?.includes(file.id) ? <Spinner small /> : (
                                 <>
                                     <IconButton iconPath={mdiDownload} onClick={() => onFileDownload(file.id)} />
-                                    {isModifiable ? <IconButton iconPath={mdiLink} onClick={() => onFileLinkGenerate(file.id)} /> : null}
-                                    {isModifiable ? <IconButton iconPath={mdiDelete} onClick={() => onFileDelete(file.id)} /> : null}
+                                    {viewOnly ? null : <IconButton iconPath={mdiLink} onClick={() => onFileLinkGenerate(file.id)} />}
+                                    {viewOnly ? null : <IconButton iconPath={mdiDelete} onClick={() => onFileDelete(file.id)} />}
                                 </>
                             )}
                         </div>
@@ -55,14 +74,13 @@ const FileList = ({
         <CenterContent fullScreen>
             <div className={css.pageContainer}>
                 <div className={css.fileListContainer}>
-                    <div className={css.header}>
-                        <Title className={css.title} text="Мої файли" />
-                        {isModifiable ? <FileUpload onChange={onFileUpload} /> : null}
-                    </div>
+                    {renderHeader()}
                     {renderContent()}
                 </div>
             </div>
-            <div className={css.logout} onClick={onLogout}>log out</div>
+            <div className={css.logout} onClick={onLogout}>
+                <Icon path={mdiLogoutVariant} size={"20px"} />
+            </div>
         </CenterContent>
     );
 };
