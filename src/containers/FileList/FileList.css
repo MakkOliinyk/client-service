@@ -66,6 +66,7 @@
     border-bottom: 1px solid var(--bordersColor);
     padding: var(--spacingSmall) var(--spacingBase);
     font-weight: var(--fontWeightMedium);
+    color: var(--textColor);
 }
 
 .fileActions {
