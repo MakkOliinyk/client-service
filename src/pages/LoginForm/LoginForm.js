@@ -2,37 +2,57 @@ import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {loginUser, registerUser} from "../../api/user";
-import {getToken} from "../../storage/token";
+import isLoggedIn from "../../utils/isLoggedIn";
 
 import Title from '../../components/Title';
 import Button from '../../components/Button';
+import Spinner from '../../components/Spinner';
 import CenterContent from '../../components/CenterContent';
 
 import css from './LoginForm.css';
 
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isRegistration, setIsRegistration] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(getToken() && getToken() !== 'undefined');
+    const [loggedIn, setLoggedIn] = useState(isLoggedIn());
+    const [isLoading, setIsLoading] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isLoggedIn) navigate('/files');
-    }, [isLoggedIn]);
+        if (loggedIn) navigate('/files');
+    }, [loggedIn]);
 
     const handleSubmit = async () => {
+        setIsLoading(true);
         if (isRegistration) await registerUser(email, password);
         else await loginUser(email, password);
+        setIsLoading(false);
 
-        setIsLoggedIn(true);
-
+        setLoggedIn(true);
     };
+
+    const getWordings = () => {
+        if (isRegistration) return {
+            title: 'Реєстрація',
+            button: 'Зареєструватися',
+            link: 'Маєте обліковий запис?',
+        };
+
+        return {
+            title: 'Вхід',
+            button: 'Увійти',
+            link: 'Не маєте облікового запису?',
+        };
+    };
+
+    const wordings = getWordings();
 
     return (
         <CenterContent fullScreen>
             <div className={css.loginFormContainer}>
-                <Title className={css.title} text={isRegistration ? 'Registration' : 'Login'} />
+                <Title className={css.title} text={wordings.title} />
                 <div className={css.loginForm}>
                     <div className={css.inputsContainer}>
                         <input
@@ -50,10 +70,10 @@ const LoginForm = ({ handleLogin }) => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <Button label={isRegistration ? 'Register' : 'Login'} onClick={handleSubmit} />
+                    <Button label={isLoading ? <Spinner small /> : wordings.button} onClick={handleSubmit} />
                 </div>
                 <div className={css.regisrationLink} onClick={() => setIsRegistration(!isRegistration)}>
-                    {isRegistration ? 'I already have an account' : 'Don\'t have an account?'}
+                    {wordings.link}
                 </div>
             </div>
         </CenterContent>
