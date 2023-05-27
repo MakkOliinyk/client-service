@@ -8,12 +8,17 @@
     border-radius: 4px;
     box-shadow: var(--boxShadowBase);
     font-weight: var(--fontWeightMedium);
+    transition: 0.2s;
 }
 .button:hover {
-    background-color: var(--primaryDark);
+    background-color: var(--primaryLight);
+    box-shadow: var(--boxShadowEnhanced);
+    transform: scale(1.01);
 }
 .button:active {
+    box-shadow: none;
     background-color: var(--primaryDarker);
+    transform: scale(1);
 }
 
 .iconButton {
