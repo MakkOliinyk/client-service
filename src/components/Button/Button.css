@@ -6,7 +6,6 @@
     border: 1px solid var(--bordersColor);
     padding: 8px 16px;
     border-radius: 4px;
-    margin-bottom: 4px;
     box-shadow: var(--boxShadowBase);
 }
 .button:hover {
